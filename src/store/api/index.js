@@ -6,7 +6,7 @@ export const api = createApi({
 	baseQuery: fetchBaseQuery({
 		baseUrl: GITHUB_URL,
 		prepareHeaders: (headers) => {
-			headers.set('Authorization', `Bearer ${GITHUB_TOKEN}`)
+			headers.set('Authorization', `token ${GITHUB_TOKEN}`)
 			return headers
 		},
 	}),
@@ -14,7 +14,10 @@ export const api = createApi({
 		getUsers: build.query({
 			query: () => `/users`,
 		}),
+		searchUsers: build.query({
+			query: (text) => `/search/users?q=${text}`,
+		}),
 	}),
 })
 
-export const { useGetUsersQuery } = api
+export const { useGetUsersQuery, useLazySearchUsersQuery } = api
