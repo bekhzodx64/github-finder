@@ -1,8 +1,11 @@
+import { Fragment } from 'react'
+import UserResults from 'components/users/UserResults'
+
 const HomePage = () => {
 	return (
-		<div>
-			<h1 className='text-6xl'>HomePage</h1>
-		</div>
+		<Fragment>
+			<UserResults />
+		</Fragment>
 	)
 }
 
