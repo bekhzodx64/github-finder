@@ -9,6 +9,7 @@ const UserSearch = ({ data, inputText, setInputText, searchUsers }) => {
 		if (inputText === '') {
 			alert('Please enter something')
 		} else {
+			searchUsers(inputText)
 			setInputText('')
 		}
 	}
@@ -29,7 +30,6 @@ const UserSearch = ({ data, inputText, setInputText, searchUsers }) => {
 							<button
 								type='submit'
 								className='absolute top-0 right-0 rounded-l-none w-36 btn btn-lg'
-								onClick={() => searchUsers(inputText)}
 							>
 								Go
 							</button>

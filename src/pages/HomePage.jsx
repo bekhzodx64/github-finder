@@ -8,6 +8,9 @@ const HomePage = () => {
 	const [inputText, setInputText] = useState('')
 
 	const [searchUsers, { data, isFetching }] = useLazySearchUsersQuery(inputText)
+	const [clearUsers] = useLazySearchUsersQuery('')
+
+	// console.log(data)
 
 	return (
 		<Fragment>
@@ -16,6 +19,7 @@ const HomePage = () => {
 				inputText={inputText}
 				setInputText={setInputText}
 				searchUsers={searchUsers}
+				clearUsers={clearUsers}
 			/>
 			<UserResults data={data} isFetching={isFetching} />
 		</Fragment>

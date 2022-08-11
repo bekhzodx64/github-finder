@@ -11,13 +11,10 @@ export const api = createApi({
 		},
 	}),
 	endpoints: (build) => ({
-		getUsers: build.query({
-			query: () => `/users`,
-		}),
 		searchUsers: build.query({
 			query: (text) => `/search/users?q=${text}`,
 		}),
 	}),
 })
 
-export const { useGetUsersQuery, useLazySearchUsersQuery } = api
+export const { useLazySearchUsersQuery } = api
