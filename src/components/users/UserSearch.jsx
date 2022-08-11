@@ -1,22 +1,15 @@
-import { useState } from 'react'
-import { useLazySearchUsersQuery } from 'store/api'
-
-const UserSearch = () => {
-	const [text, setText] = useState('')
-
-	const [searchUsers] = useLazySearchUsersQuery(text)
-
+const UserSearch = ({ data, inputText, setInputText, searchUsers }) => {
 	const handleChange = (e) => {
-		setText(e.target.value)
+		setInputText(e.target.value)
 	}
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
 
-		if (text === '') {
+		if (inputText === '') {
 			alert('Please enter something')
 		} else {
-			setText('')
+			setInputText('')
 		}
 	}
 
@@ -30,13 +23,13 @@ const UserSearch = () => {
 								type='text'
 								placeholder='Search users'
 								className='w-full pr-40 bg-gray-200 input input-lg text-black'
-								value={text}
+								value={inputText}
 								onChange={handleChange}
 							/>
 							<button
 								type='submit'
 								className='absolute top-0 right-0 rounded-l-none w-36 btn btn-lg'
-								onClick={() => searchUsers(text)}
+								onClick={() => searchUsers(inputText)}
 							>
 								Go
 							</button>
@@ -44,11 +37,14 @@ const UserSearch = () => {
 					</div>
 				</form>
 			</div>
-			{/* {data.length > 0 && ( */}
-			<div>
-				<button className='btn bnt-ghost btn-lg'>Clear</button>
-			</div>
-			{/* )} */}
+
+			{data && (
+				<div>
+					<button type='button' className='btn bnt-ghost btn-lg'>
+						Clear
+					</button>
+				</div>
+			)}
 		</div>
 	)
 }
