@@ -1,4 +1,10 @@
-const UserSearch = ({ data, inputText, setInputText, searchUsers }) => {
+const UserSearch = ({
+	users,
+	inputText,
+	setInputText,
+	searchUsers,
+	handleClear,
+}) => {
 	const handleChange = (e) => {
 		setInputText(e.target.value)
 	}
@@ -38,9 +44,13 @@ const UserSearch = ({ data, inputText, setInputText, searchUsers }) => {
 				</form>
 			</div>
 
-			{data && (
+			{users?.items && (
 				<div>
-					<button type='button' className='btn bnt-ghost btn-lg'>
+					<button
+						type='button'
+						className='btn bnt-ghost btn-lg'
+						onClick={handleClear}
+					>
 						Clear
 					</button>
 				</div>

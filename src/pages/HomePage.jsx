@@ -1,27 +1,36 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import UserResults from 'components/users/UserResults'
 import UserSearch from 'components/users/UserSearch'
 
 import { useLazySearchUsersQuery } from 'store/api'
+import { saveUsers, clearUsers } from 'store/features/usersSlice'
+import { useDispatch, useSelector } from 'react-redux'
 
 const HomePage = () => {
+	const dispatch = useDispatch()
 	const [inputText, setInputText] = useState('')
 
 	const [searchUsers, { data, isFetching }] = useLazySearchUsersQuery(inputText)
-	const [clearUsers] = useLazySearchUsersQuery('')
+	const users = useSelector((state) => state.users.users)
 
-	// console.log(data)
+	const handleClear = () => {
+		dispatch(clearUsers())
+	}
+
+	useEffect(() => {
+		dispatch(saveUsers(data))
+	}, [dispatch, data])
 
 	return (
 		<Fragment>
 			<UserSearch
-				data={data}
+				users={users}
 				inputText={inputText}
 				setInputText={setInputText}
 				searchUsers={searchUsers}
-				clearUsers={clearUsers}
+				handleClear={handleClear}
 			/>
-			<UserResults data={data} isFetching={isFetching} />
+			<UserResults users={users} isFetching={isFetching} />
 		</Fragment>
 	)
 }

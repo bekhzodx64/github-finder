@@ -10,6 +10,7 @@ export const api = createApi({
 			return headers
 		},
 	}),
+	keepUnusedDataFor: 1000,
 	endpoints: (build) => ({
 		searchUsers: build.query({
 			query: (text) => `/search/users?q=${text}`,
