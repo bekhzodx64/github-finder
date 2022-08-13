@@ -1,21 +1,44 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+
+import { GITHUB_URL, GITHUB_TOKEN } from 'config'
 
 const initialState = {
-	users: [],
+	result: [],
+	isLoading: false,
 }
 
+export const findUsers = createAsyncThunk('users/findUsers', async (user) => {
+	return await fetch(`${GITHUB_URL}search/users?q=${user}`, {
+		method: 'GET',
+		headers: {
+			Authorization: `token ${GITHUB_TOKEN}`,
+		},
+	})
+		.then((res) => res.json())
+		.catch((err) => console.log(err))
+})
+
 const usersSlice = createSlice({
-	name: 'users',
+	name: 'result',
 	initialState,
 	reducers: {
-		saveUsers: (state, { payload }) => {
-			state.users = payload
-		},
 		clearUsers: (state) => {
-			state.users = []
+			state.result = []
+		},
+	},
+	extraReducers: {
+		[findUsers.pending]: (state) => {
+			state.isLoading = true
+		},
+		[findUsers.fulfilled]: (state, action) => {
+			state.isLoading = false
+			state.result = action.payload
+		},
+		[findUsers.rejected]: (state) => {
+			state.isLoading = false
 		},
 	},
 })
 
-export const { saveUsers, clearUsers } = usersSlice.actions
+export const { clearUsers } = usersSlice.actions
 export default usersSlice.reducer

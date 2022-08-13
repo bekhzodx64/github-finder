@@ -1,13 +1,17 @@
-const UserSearch = ({
-	users,
-	inputText,
-	setInputText,
-	searchUsers,
-	handleClear,
-}) => {
+import { useState } from 'react'
+
+import { useDispatch, useSelector } from 'react-redux'
+import { findUsers, clearUsers } from 'store/features/usersSlice'
+
+const UserSearch = () => {
+	const [inputText, setInputText] = useState('')
+	const dispatch = useDispatch()
+
 	const handleChange = (e) => {
 		setInputText(e.target.value)
 	}
+
+	const result = useSelector((state) => state.users.result)
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
@@ -15,9 +19,13 @@ const UserSearch = ({
 		if (inputText === '') {
 			alert('Please enter something')
 		} else {
-			searchUsers(inputText)
+			dispatch(findUsers(inputText))
 			setInputText('')
 		}
+	}
+
+	const handleClear = () => {
+		dispatch(clearUsers())
 	}
 
 	return (
@@ -44,7 +52,7 @@ const UserSearch = ({
 				</form>
 			</div>
 
-			{users?.items && (
+			{result.total_count > 0 && (
 				<div>
 					<button
 						type='button'

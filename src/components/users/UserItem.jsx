@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
 
 const UserItem = ({ user }) => {
-	const { login, avatar_url } = user
+	const { avatar_url, login } = user
+
 	return (
 		<div className='card shadow-md compact side bg-base-100'>
 			<div className='flex-row items-center space-x-4 card-body'>
