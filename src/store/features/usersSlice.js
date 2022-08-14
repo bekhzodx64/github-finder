@@ -5,6 +5,7 @@ import { GITHUB_URL, GITHUB_TOKEN } from 'config'
 const initialState = {
 	result: [],
 	user: {},
+	repos: [],
 	isLoading: false,
 	alert: null,
 }
@@ -30,6 +31,24 @@ export const getUser = createAsyncThunk('user/getUser', async (login) => {
 		.then((res) => res.json())
 		.catch((err) => console.log(err))
 })
+
+export const getUserRepos = createAsyncThunk(
+	'user/getUserRepos',
+	async (login) => {
+		const params = new URLSearchParams({
+			sort: 'created',
+		})
+
+		return await fetch(`${GITHUB_URL}users/${login}/repos?${params}`, {
+			method: 'GET',
+			headers: {
+				Authorization: `token ${GITHUB_TOKEN}`,
+			},
+		})
+			.then((res) => res.json())
+			.catch((err) => console.log(err))
+	}
+)
 
 const usersSlice = createSlice({
 	name: 'result',
@@ -61,6 +80,16 @@ const usersSlice = createSlice({
 			state.user = action.payload
 		},
 		[getUser.rejected]: (state) => {
+			state.isLoading = false
+		},
+		[getUserRepos.pending]: (state) => {
+			state.isLoading = true
+		},
+		[getUserRepos.fulfilled]: (state, action) => {
+			state.isLoading = false
+			state.repos = action.payload
+		},
+		[getUserRepos.rejected]: (state) => {
 			state.isLoading = false
 		},
 	},
