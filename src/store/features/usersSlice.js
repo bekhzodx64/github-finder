@@ -11,7 +11,7 @@ const initialState = {
 }
 
 export const findUsers = createAsyncThunk('users/findUsers', async (user) => {
-	return await fetch(`${GITHUB_URL}search/users?q=${user}`, {
+	return await fetch(`${GITHUB_URL}/search/users?q=${user}`, {
 		method: 'GET',
 		headers: {
 			Authorization: `token ${GITHUB_TOKEN}`,
@@ -22,7 +22,7 @@ export const findUsers = createAsyncThunk('users/findUsers', async (user) => {
 })
 
 export const getUser = createAsyncThunk('user/getUser', async (login) => {
-	return await fetch(`${GITHUB_URL}users/${login}`, {
+	return await fetch(`${GITHUB_URL}/users/${login}`, {
 		method: 'GET',
 		headers: {
 			Authorization: `token ${GITHUB_TOKEN}`,
@@ -39,7 +39,7 @@ export const getUserRepos = createAsyncThunk(
 			sort: 'created',
 		})
 
-		return await fetch(`${GITHUB_URL}users/${login}/repos?${params}`, {
+		return await fetch(`${GITHUB_URL}/users/${login}/repos?${params}`, {
 			method: 'GET',
 			headers: {
 				Authorization: `token ${GITHUB_TOKEN}`,
