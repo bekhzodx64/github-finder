@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { findUsers, clearUsers } from 'store/features/usersSlice'
+import { findUsers, clearUsers, setAlert } from 'store/features/usersSlice'
 
 const UserSearch = () => {
 	const [inputText, setInputText] = useState('')
@@ -17,7 +17,10 @@ const UserSearch = () => {
 		e.preventDefault()
 
 		if (inputText === '') {
-			alert('Please enter something')
+			dispatch(setAlert('Please enter something!'))
+			setTimeout(() => {
+				dispatch(setAlert(null))
+			}, 3000)
 		} else {
 			dispatch(findUsers(inputText))
 			setInputText('')
