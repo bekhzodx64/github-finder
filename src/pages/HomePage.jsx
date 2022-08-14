@@ -10,7 +10,6 @@ const HomePage = () => {
 	return (
 		<Fragment>
 			{alert !== null && <Alert />}
-
 			<UserSearch />
 			<UserResults />
 		</Fragment>
