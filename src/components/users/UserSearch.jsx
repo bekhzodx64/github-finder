@@ -11,7 +11,7 @@ const UserSearch = () => {
 		setInputText(e.target.value)
 	}
 
-	const result = useSelector((state) => state.users.result)
+	const users = useSelector((state) => state.users.users)
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
@@ -55,7 +55,7 @@ const UserSearch = () => {
 				</form>
 			</div>
 
-			{result.total_count > 0 && (
+			{users?.total_count > 0 && (
 				<div>
 					<button
 						type='button'

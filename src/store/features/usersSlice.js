@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { GITHUB_URL, GITHUB_TOKEN } from 'config'
 
 const initialState = {
-	result: [],
+	users: [],
 	user: {},
 	repos: [],
 	isLoading: false,
@@ -21,7 +21,7 @@ export const findUsers = createAsyncThunk('users/findUsers', async (user) => {
 		.catch((err) => console.log(err))
 })
 
-export const getUser = createAsyncThunk('user/getUser', async (login) => {
+export const getUser = createAsyncThunk('users/getUser', async (login) => {
 	return await fetch(`${GITHUB_URL}/users/${login}`, {
 		method: 'GET',
 		headers: {
@@ -33,7 +33,7 @@ export const getUser = createAsyncThunk('user/getUser', async (login) => {
 })
 
 export const getUserRepos = createAsyncThunk(
-	'user/getUserRepos',
+	'users/getUserRepos',
 	async (login) => {
 		const params = new URLSearchParams({
 			sort: 'created',
@@ -51,11 +51,11 @@ export const getUserRepos = createAsyncThunk(
 )
 
 const usersSlice = createSlice({
-	name: 'result',
+	name: 'users',
 	initialState,
 	reducers: {
 		clearUsers: (state) => {
-			state.result = []
+			state.users = []
 		},
 		setAlert: (state, { payload }) => {
 			state.alert = payload
@@ -67,7 +67,7 @@ const usersSlice = createSlice({
 		},
 		[findUsers.fulfilled]: (state, action) => {
 			state.isLoading = false
-			state.result = action.payload
+			state.users = action.payload
 		},
 		[findUsers.rejected]: (state) => {
 			state.isLoading = false
